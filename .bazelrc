@@ -1,0 +1,5 @@
+build --cxxopt=--std=c++17
+build --enable_bzlmod=false
+build --enable_workspace
+query --enable_workspace
+test --enable_workspace
