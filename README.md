@@ -7,27 +7,13 @@ Building the image: `podman build -t repro38916_image .`
 ### Building and running the server:
 
 ```
-podman run \
-  -it \
-  --volume=".:/work:rw" \
-  --name repro38916_container \
-  repro38916_image:latest \
-  /bin/bash -c "
-    cd /work
-    bazel build :all && ./bazel-bin/repro_38916_server"
+./run_workspace_in_podman.sh
 ```
 
 ### Running the grpcurl client:
 
 ```
-podman container exec repro38916_container \
-  grpcurl \
-    -plaintext \
-    -import-path /work \
-    -proto repro_38916.proto \
-    -d '{"masterId": "100", "bugs": [ {"bugId": "1", "bugInfo": "hello"}, { "bugId": "2", "bugInfo": "world" } ] }' \
-    localhost:50051 \
-    repro38916.BugService/SayHelloBug
+run_grpcurl_in_podman.sh
 ```
 
 ### Cleanup
